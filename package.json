@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "server.mjs",
+    "serverStart": "nodemon server.mjs",
+    "clientStart": "cd client && npm run serve",
+    "startAll": "concurrently \"npm run serverStart\" \"npm run clientStart\""
   },
   "keywords": [],
   "author": "",
@@ -12,9 +16,11 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mqtt": "^4.3.7",
     "socket.io": "^4.5.3"
   },
   "devDependencies": {
+    "concurrently": "^7.5.0",
     "mocha": "^10.1.0",
     "nodemon": "^2.0.20"
   }
