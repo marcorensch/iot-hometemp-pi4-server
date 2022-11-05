@@ -15,6 +15,12 @@ const port = 3000;
 
 httpServer.listen(port, () => {
     console.log(`Server is running on port ${port}`);
+    io.emit('temperature-updated', 'Hello World');
+
+});
+
+io.on("connection", (socket) => {
+    socket.emit('temperature-updated', {msg: 'Hello World via io'});
 });
 
 server.get('/', (req, res) => {
