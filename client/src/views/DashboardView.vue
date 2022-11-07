@@ -23,6 +23,10 @@ export default {
     console.log('HomeView mounted');
     this.connectToServer();
     this.socket.on('temperature-updated', this.temperatureUpdated);
+    this.socket.emit('get-settings');
+    this.socket.on('current-settings', (settings) => {
+      console.log('settings', settings);
+    });
   },
   methods: {
     temperatureUpdated(data) {
