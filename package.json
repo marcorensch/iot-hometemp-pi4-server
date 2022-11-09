@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "server.mjs",
-    "serverStart": "nodemon --ignore '/settings.json' --ignore README server.mjs",
+    "serverStart": "nodemon --ignore '/config.json' --ignore README server.mjs",
     "clientStart": "cd client && npm run serve",
     "startAll": "concurrently \"npm run serverStart\" \"npm run clientStart\""
   },

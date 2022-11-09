@@ -11,7 +11,8 @@ class MariadbConnection {
         connectionLimit: process.env.DB_CONNECTION_LIMIT,
       });
     } catch (err) {
-      console.log(err);
+      console.log("Could not create Database connection pool");
+      // console.log(err);
     }
   }
 
@@ -21,6 +22,7 @@ class MariadbConnection {
       conn = await this.pool.getConnection();
       return await conn.query(sql, params);
     } catch (err) {
+      console.log("Could not execute query Database might not be reachable");
       throw err;
     } finally {
       if (conn) await conn.end();

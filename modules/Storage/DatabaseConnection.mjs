@@ -44,8 +44,6 @@ class DatabaseConnection {
         if(forecast) {
             const forecastString = JSON.stringify(forecast);
             const insertStatus = await this.insertForecast(forecastString, locationId);
-            console.log(insertStatus);
-
             return await this.getForecastById(insertStatus.insertId);
         }
 
@@ -72,7 +70,6 @@ class Helper {
         const updateIntervalMs = process.env.DB_UPDATEINTERVALMS;
         const now = new Date().getTime();
         const diff = now - Number(lastUpdate);
-        console.log(now, lastUpdate, diff , updateIntervalMs);
 
         return diff > updateIntervalMs;
 

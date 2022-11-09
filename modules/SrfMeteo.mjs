@@ -16,20 +16,22 @@ class SrfMeteo {
 
     async requestForecast() {
         // Check Token validity
-        if(!await this.tokenIsValid()){
-            console.log("Token is not valid");
+        if (!await this.tokenIsValid()) {
             await this.updateToken();
         }
         const config = {
-            headers: { Authorization: `Bearer ${nconf.get("token")}` }
+            headers: {Authorization: `Bearer ${nconf.get("token")}`}
         };
         return axios.get("https://" + this.options.hostname + this.options.path, config).then((response) => {
-            console.log("Waether Response: " ,response);
             this.forecast = response.data;
             return this.forecast;
         }).catch((error) => {
-             console.log(error);
-             return false;
+            if (error.errno === -3008) {
+                console.log("Could not connect to SRF Meteo API");
+            } else {
+                console.log(error);
+            }
+            return false;
         });
     }
 

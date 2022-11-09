@@ -1,9 +1,9 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import nconf from 'nconf';
-nconf.use('file', { file: './config.json' });
-nconf.load();
+import AppSettings from "./modules/Storage/AppSettings.mjs";
+const appSettings = new AppSettings();
+appSettings.setMeteoVariables();
 
 import express from 'express';
 import { createServer } from 'http';
@@ -44,10 +44,13 @@ io.on("get-settings", (socket) => {
 server.get('/', (req, res) => {
     // srfMeteo.requestForecast();
     // console.log(srfMeteo.getForecast());
+    let weatherData = {};
     database.getForecastForLocationId(process.env.METEO_LOCATIONID).then((rows) => {
-        console.log(rows);
+        weatherData = rows[0];
+        res.send(weatherData);
     }).catch((err) => {
-        console.log(err);});
+        console.log(err);
+        res.json(weatherData);
+    });
 
-    res.json({ message: 'hello from the Back' })
 });
