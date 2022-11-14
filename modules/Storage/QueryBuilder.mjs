@@ -43,7 +43,7 @@ class QueryBuilder {
         switch (this._type.toLowerCase()) {
             case 'select':
                 string = `SELECT `;
-                if (this._fields.length > 0) {
+                if (this._fields && this._fields.length > 0) {
                     string += this._fields.join(', ');
                 } else {
                     string += '*';

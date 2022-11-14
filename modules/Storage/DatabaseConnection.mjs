@@ -9,7 +9,16 @@ class DatabaseConnection {
 
     async insertForecast(forecastString, locationId) {
         const timestamp = Helper.getTimestamp();
-        const sql = this.conn.createQueryString('INSERT', this.meteoTable, {created: timestamp, forecast: forecastString, location_id: locationId});
+        const sqlObj = this.conn.createQueryBuilder();
+        sqlObj.setType('insert');
+        sqlObj.setTable(this.meteoTable);
+        sqlObj.setFields({
+            location_id: locationId,
+            created: timestamp,
+            forecast: forecastString
+        });
+        const sql = sqlObj.getSql();
+        // const sql = this.conn.createQueryString('INSERT', this.meteoTable, {created: timestamp, forecast: forecastString, location_id: locationId});
         return await this.conn.query(sql, [timestamp, forecastString, locationId]);
     }
 
@@ -44,31 +53,24 @@ class DatabaseConnection {
     }
 
     async getForecastForLocationId(locationId) {
-        let rows = null;
-        try {
-            console.log(locationId)
-            // const sql = this.conn.createQueryString('SELECT', this.meteoTable, {location_id: locationId}, ' ORDER BY created DESC LIMIT 1');
-            const sqlObj = this.conn.createQueryBuilder();
-            sqlObj.setType('select');
-            sqlObj.setTable(this.meteoTable);
-            sqlObj.setWhere(`location_id = ?`);
-            sqlObj.setOrder('created DESC');
-            sqlObj.setLimit(1);
-            const sql = sqlObj.getSql();
-            rows = await this.conn.query(sql, [locationId]) ;
-        }catch (err) {
-            console.log(err);
-        }
+        // const sql = this.conn.createQueryString('SELECT', this.meteoTable, {location_id: locationId}, ' ORDER BY created DESC LIMIT 1');
+        const sqlObj = this.conn.createQueryBuilder();
+        sqlObj.setType('select');
+        sqlObj.setTable(this.meteoTable);
+        sqlObj.setWhere(`location_id = ?`);
+        sqlObj.setOrder('created DESC');
+        sqlObj.setLimit(1);
+        const sql = sqlObj.getSql();
+        let rows = await this.conn.query(sql, [locationId]) ;
         if(rows && rows.length > 0) {
             const createdTimestamp = rows[0].created;
             if(Helper.forecastUpdateRequired(createdTimestamp)) {
-                // rows = await this.getNewForecast(locationId);
+                console.log('update required');
+                rows = await this.getNewForecast(locationId);
             }
         }else{
-            // rows = await this.getNewForecast(locationId);
+            rows = await this.getNewForecast(locationId);
         }
-
-        console.log(rows);
 
         return rows;
     }
