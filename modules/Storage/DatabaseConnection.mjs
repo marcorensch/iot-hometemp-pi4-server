@@ -15,7 +15,18 @@ class DatabaseConnection {
 
     async insertSensorData(topic, data) {
         const timestamp = Helper.getTimestamp();
-        const sql = this.conn.createQueryString('INSERT', this.sensorsTable, {topic: topic, created: timestamp, temperature: data.temperature, humidity: data.humidity, sensorId: data.sensorId});
+        const sqlObj = this.conn.createQueryBuilder();
+        sqlObj.setType('insert');
+        sqlObj.setTable(this.sensorsTable);
+        sqlObj.setFields({
+            topic: topic,
+            created: timestamp,
+            temperature: data.temperature,
+            humidity: data.humidity,
+            sensorId: data.sensorId
+        });
+        const sql = sqlObj.getSql();
+        // const sql = this.conn.createQueryString('INSERT', this.sensorsTable, {topic: topic, created: timestamp, temperature: data.temperature, humidity: data.humidity, sensorId: data.sensorId});
         return await this.conn.query(sql, [topic, timestamp, data.temperature, data.humidity, data.sensorId]);
     }
 
@@ -23,10 +34,10 @@ class DatabaseConnection {
         const lastWeekTimestamp = Helper.getDaysAgoTimestamp(7);
         const sqlObj = this.conn.createQueryBuilder();
         sqlObj.setType('select');
-        sqlObj.setFields(['topic']);
+        sqlObj.setFields(['sensorId', 'MAX(topic) as topic']);
         sqlObj.setTable(this.sensorsTable);
         sqlObj.setWhere(`created > ?`);
-        sqlObj.setGroup('topic');
+        sqlObj.setGroup('sensorId');
         const sql = sqlObj.getSql();
         // const sql = this.conn.createQueryString('SELECT', this.sensorsTable, {topic: 'topic', created: lastWeekTimestamp}, 'created > ? GROUP BY topic');
         return await this.conn.query(sql, [lastWeekTimestamp]);
