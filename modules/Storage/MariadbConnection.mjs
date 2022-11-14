@@ -1,4 +1,5 @@
 import mariadb from 'mariadb';
+import QueryBuilder from './QueryBuilder.mjs';
 
 class MariadbConnection {
   constructor() {
@@ -28,6 +29,25 @@ class MariadbConnection {
       if (conn) await conn.end();
     }
   }
+
+  createQueryBuilder() {
+    return new QueryBuilder();
+  }
+
+  // createQueryString(type, table, data) {
+  //   switch (type) {
+  //       case "SELECT":
+  //           return `SELECT * FROM ${table} WHERE ${Object.keys(data).map(key => `${key} = ?`).join(" AND ")}`;
+  //       case "INSERT":
+  //           return `INSERT INTO ${table} (${Object.keys(data).join(",")}) VALUES (${Object.keys(data).map((key) => "?").join(",")})`;
+  //       case "UPDATE":
+  //           return `UPDATE ${table} SET ${Object.keys(data).map((key) => `${key} = ?`).join(",")} WHERE id = ?`;
+  //       case "DELETE":
+  //           return `DELETE FROM ${table} WHERE id = ?`;
+  //       default:
+  //           return false;
+  //   }
+  // };
 }
 
 export default MariadbConnection;

@@ -1,0 +1,34 @@
+DB_HOST="localhost"
+DB_USER="tuvok"
+DB_PASS="tuvok-sigma-4"
+DB_PORT="3306"
+DB_CONNECTION_LIMIT="5"
+# The name of the database to create (will be created if it does not exist)
+DB_DATABASE="voyager"
+# The name of the database table for weather forecast (will be created if it does not exist)
+DB_METEOTABLENAME="tbl_meteo"
+# The name of the database table for sensor data (will be created if it does not exist)
+DB_SENSORSTABLENAME="tbl_sensors"
+
+# Updateinterval in milliseconds - 21600000 = 6h (7200000 = 2h) ==> max update interval for Freemium SwissMeteo API is 25 per 24h
+DB_UPDATEINTERVALMS=21600000
+
+# Meteo API Data
+# Get your credentials at https://developer.srgssr.ch/
+METEO_CONSUMER_KEY="<CONSUMER_KEY>"
+METEO_CONSUMER_SECRET="<CONSUMER_SECRET>"
+
+# The URL for the meteo API
+METEO_HOST="api.srgssr.ch"
+# The path for the meteo OAuth2 token
+METEO_OAUTH_PATH="/oauth/v1/accesstoken?grant_type=client_credentials"
+# The path for the meteo forecast API
+METEO_PATH="/srf-meteo/forecast"
+
+# The location id for the meteo API
+METEO_LOCATION_ZIP="<ZIP>" // e.g. 8001
+METEO_LOCATIONID="<LOCATION_ID>" // "47.0459,9.4215" Mels Switzerland
+
+# MQTT Broker
+MQTT_HOST="localhost"
+MQTT_PORT="1883"

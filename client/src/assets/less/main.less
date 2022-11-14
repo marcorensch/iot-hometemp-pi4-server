@@ -1,6 +1,13 @@
+@background: #232323;
+
+html, body {
+  height: 100%;
+  background: @background;
+}
+
 #nxd-statusbar{
   padding:6px;
-  background: #232323;
+  background: @background;
 }
 .statusbar-icon{
   color: #8a8a8a;
@@ -9,4 +16,71 @@
   &:last-of-type{
     padding-right: 0 !important;
   }
+}
+
+// Dashboard
+.nxd-dashboard-card{
+  background: linear-gradient(180deg, rgba(35, 35, 35, 0.7) 0%, rgba(26, 26, 26, 0.78) 100%);
+  border:1px solid rgba(168, 168, 168, 0.37);
+  backdrop-filter: blur(5px);
+  *{
+    color: rgba(222, 222, 222, 0.88);
+    text-shadow: 0 0 3px #000;
+  }
+}
+.nxd-dashboard-weather-image{
+  right: -20px;
+  top: 0px;
+  width: 200px;
+}
+
+// Weather Card
+.nxd-card-title {
+  position: relative;
+  z-index: 9;
+}
+.nxd-day-data{
+  margin-top:0px;
+
+  .uk-list-divider > :nth-child(n+2){
+    border-color: rgba(168, 168, 168, 0.37);
+  }
+}
+.today-header{
+  margin-bottom:.5em;
+}
+.nxd-current-temp{
+  font-size: 4em;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+.nxd-temp-high{
+}
+.nxd-temp-low{
+}
+.meteodatacredits{
+  margin-top:15px;
+
+}
+.nxd-text-xsmall{
+  font-size: 0.45em;
+}
+
+.sensor-item-container{
+  border: 1px solid rgba(168, 168, 168, 0.37);
+    border-radius: 5px;
+  position: relative;
+}
+
+.nxd-sensor-title{
+  margin: 0;
+  padding-bottom: 1.5em;
+}
+
+.sensor-data{
+    font-size: 1.2em;
+    font-weight: 600;
+    margin: 0;
+    padding: 0;
 }

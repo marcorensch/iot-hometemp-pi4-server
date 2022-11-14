@@ -17,6 +17,15 @@ database.setup().then((status) => {
     console.log("Database setup done");
 });
 
+import MqttCommander from "./modules/Sensors/MqttCommander.mjs";
+const mqttCommander = new MqttCommander();
+// mqttCommander.subscribeTopic('/voyager/test/#');
+mqttCommander.subscribeTopic('/voyager/sensors/#');
+
+mqttCommander.useDatabase('sensors', database);
+
+
+
 const server = express();
 const httpServer = createServer(server);
 const io = new Server(httpServer, {
@@ -35,22 +44,38 @@ httpServer.listen(port, () => {
 
 
 io.on("connection", (socket) => {
-    socket.emit('temperature-updated', {msg: 'Hello World via io'});
-});
-io.on("get-settings", (socket) => {
-    socket.emit('current-settings', appSettings.get());
+
+    socket.on('get:settings', () => {
+        const settings = appSettings.getSettings();
+        socket.emit('stored:settings', settings);
+    });
+
+    socket.on("store:settings", (data) => {
+        appSettings.storeSettings(data);
+    });
+
+    socket.on('get:sensors', async () => {
+        const sensors = await database.getActiveSensors();
+        socket.emit('stored:sensors', sensors);
+    });
 });
 
 server.get('/', (req, res) => {
-    // srfMeteo.requestForecast();
-    // console.log(srfMeteo.getForecast());
     let weatherData = {};
-    database.getForecastForLocationId(process.env.METEO_LOCATIONID).then((rows) => {
-        weatherData = rows[0];
-        res.send(weatherData);
-    }).catch((err) => {
-        console.log(err);
-        res.json(weatherData);
-    });
+    const currentLocation = appSettings.getSettings('meteo_location');
+    console.log(currentLocation);
+    if (currentLocation && currentLocation.hasOwnProperty('meteo_location')) {
+        database.getForecastForLocationId(currentLocation.meteo_location.id).then((rows) => {
+            res.send(rows[0]);
+        }).catch((err) => {
+            console.log(err);
+            res.json(weatherData);
+        });
+    } else {
+        console.log(currentLocation)
+        res.send('No Location set');
+    }
+
+
 
 });

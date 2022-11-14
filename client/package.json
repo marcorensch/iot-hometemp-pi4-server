@@ -11,6 +11,8 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "core-js": "^3.8.3",
+    "pinia": "^2.0.23",
+    "simple-keyboard": "^3.4.184",
     "socket.io-client": "^4.5.3",
     "uikit": "^3.15.12",
     "vue": "^3.2.13",
