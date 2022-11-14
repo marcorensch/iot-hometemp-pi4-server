@@ -1,0 +1,37 @@
+{
+  "consumer_key": "0rx453DLrAA9uF4JWv55A3YaDYnYY0Ak",
+  "consumer_secret": "DFg66NOI06XG7LCl",
+  "meteo_location_zip": "8887",
+  "token": "t13kulXtQcPDjlZMuWBueAGbyFGF",
+  "tokenExpirationDate": 1671011394691,
+  "meteo_location": {
+    "id": "47.0459,9.4215",
+    "lat": 47.0459,
+    "lon": 9.4215,
+    "station_id": "S16992",
+    "timezone": "Europe/Zurich",
+    "default_name": "Mels",
+    "alarm_region_id": "77",
+    "alarm_region_name": "Sarganserland",
+    "district": "",
+    "geolocation_names": [
+      {
+        "district": "",
+        "description_short": "Sankt Gallen",
+        "description_long": "Sankt Gallen, 497 m.ü.M.",
+        "id": "9548c5332936d701b0aede155209456c",
+        "location_id": "4180008879",
+        "type": "city",
+        "language": 0,
+        "translation_type": "orig",
+        "name": "Mels",
+        "country": "Schweiz",
+        "province": "Sankt Gallen",
+        "inhabitants": 0,
+        "height": 497,
+        "plz": 8879,
+        "ch": 1
+      }
+    ]
+  }
+}
