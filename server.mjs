@@ -51,6 +51,12 @@ io.on("connection", (socket) => {
         const sensors = await database.getActiveSensors();
         socket.emit('stored:sensors', sensors);
     });
+
+    socket.on('get:getSensorHistory', async (sensor_id) => {
+        console.log(sensor_id);
+        // const sensors = await database.getActiveSensors();
+        // socket.emit('stored:sensors', sensors);
+    });
 });
 
 server.get('/', (req, res) => {

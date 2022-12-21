@@ -10,7 +10,6 @@ class AppSettings {
     }
 
     async setMeteoVariables() {
-        console.log(process.env)
         if (!nconf.get("consumer_key")) {
             nconf.set("consumer_key", process.env.METEO_CONSUMER_KEY);
         }

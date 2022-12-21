@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="sensor-item-container uk-padding-small ">
+    <div class="sensor-item-container uk-padding-small" @click="showSensorDetailsClicked">
       <div class="uk-width-1-1 uk-text-truncate uk-text-center">
         <span class="nxd-sensor-title">{{ sensor.name }}</span>
       </div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { useSensorStore } from "@/stores/SensorStore";
 export default {
   name: 'Sensors',
   components: {},
@@ -35,7 +36,15 @@ export default {
     },
   },
   data() {
-    return {};
-  }
+    return {
+      sensorStore: useSensorStore(),
+    };
+  },
+  methods: {
+    showSensorDetailsClicked() {
+      this.sensorStore.set(this.sensor);
+      this.$router.push({name: 'sensor'});
+    },
+  },
 }
 </script>

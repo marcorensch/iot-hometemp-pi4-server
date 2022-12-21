@@ -33,6 +33,7 @@
 // import DashboardView from '@/components/DashboardView.vue';
 
 import { useMeteoDataStore } from '@/stores/MeteoDataStore';
+
 import io from 'socket.io-client';
 import MeteoDay from "@/components/MeteoDay";
 import Sensors from "@/components/Sensors";
