@@ -11,43 +11,19 @@
          :src="require(`@/assets/images/weather/${meteoDataHour.SYMBOL_CODE}.png`)">
     <div class="nxd-day-data">
       <h5 class="today-header">Heute:</h5>
-      <div class="uk-child-width-1-2 uk-grid-small uk-text-small" uk-grid>
-        <div>
-          <ul class="uk-list uk-list-divider">
-            <li>
-              <font-awesome-icon icon="cloud-sun-rain" class="uk-margin-small-right" />{{ meteoDataToday.PROBPCP_PERCENT }}%
-            </li>
-            <li>
-              <font-awesome-icon icon="temperature-arrow-up" class="uk-margin-small-right"/>{{ meteoDataToday.TX_C }}&#8451;
-            </li>
-            <li>
-              <font-awesome-icon icon="temperature-arrow-down" class="uk-margin-small-right"/>{{ meteoDataToday.TN_C }}&#8451;
-            </li>
-          </ul>
-        </div>
-        <div>
-          <ul class="uk-list uk-list-divider">
-            <li>
-              <font-awesome-icon icon="wind" class="uk-margin-small-right" />{{ meteoDataToday.FF_KMH }}km/h
-            </li>
-            <li>
-              <font-awesome-icon icon="sun" class="uk-margin-small-right"/>{{ sunrise }}
-            </li>
-            <li>
-              <font-awesome-icon icon="moon" class="uk-margin-small-right"/>{{ sunset }}
-            </li>
-          </ul>
-        </div>
-      </div>
+      <DayTable :data="meteoDataToday" />
+
     </div>
-    <div class="meteodatacredits nxd-text-xsmall">Wetterdaten von Meteo Schweiz.<br>Zuletzt aktualisiert: {{meteoUpdated.toLocaleDateString()}} um {{meteoUpdated.toLocaleTimeString()}}</div>
+    <div class="meteodatacredits nxd-text-xsmall">Wetterdaten von Meteo Schweiz.<br>Zuletzt aktualisiert: {{meteoUpdated.toLocaleDateString()}} um {{meteoUpdated.toLocaleTimeString([],{ hour: '2-digit', minute:'2-digit'})}} Uhr</div>
   </div>
 </template>
 
 <script>
+import DayTable from "@/components/DayTable.vue";
+
 export default {
   name: 'MeteoDay',
-  components: {},
+  components: {DayTable},
   props: {
     meteoDataToday: Object,
     meteoDataHour: Object,
@@ -62,6 +38,7 @@ export default {
   },
   computed: {},
   mounted() {
+    console.log(this.meteoUpdated)
     this.sunset = this.createTimeString(this.meteoDataToday.SUNSET);
     this.sunrise = this.createTimeString(this.meteoDataToday.SUNRISE);
 

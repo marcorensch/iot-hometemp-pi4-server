@@ -19,7 +19,7 @@ class DatabaseConnection {
         });
         const sql = sqlObj.getSql();
         // const sql = this.conn.createQueryString('INSERT', this.meteoTable, {created: timestamp, forecast: forecastString, location_id: locationId});
-        return await this.conn.query(sql, [timestamp, forecastString, locationId]);
+        return await this.conn.query(sql, [locationId, timestamp, forecastString]);
     }
 
     async insertSensorData(topic, data) {
@@ -32,7 +32,7 @@ class DatabaseConnection {
             created: timestamp,
             temperature: data.temperature,
             humidity: data.humidity,
-            sensorId: data.sensorId
+            sensor_id: data.sensorId
         });
         const sql = sqlObj.getSql();
         // const sql = this.conn.createQueryString('INSERT', this.sensorsTable, {topic: topic, created: timestamp, temperature: data.temperature, humidity: data.humidity, sensorId: data.sensorId});
@@ -43,13 +43,24 @@ class DatabaseConnection {
         const lastWeekTimestamp = Helper.getDaysAgoTimestamp(7);
         const sqlObj = this.conn.createQueryBuilder();
         sqlObj.setType('select');
-        sqlObj.setFields(['sensorId', 'MAX(topic) as topic']);
+        sqlObj.setFields(['sensor_id', 'MAX(topic) as topic']);
         sqlObj.setTable(this.sensorsTable);
         sqlObj.setWhere(`created > ?`);
-        sqlObj.setGroup('sensorId');
+        sqlObj.setGroup('sensor_id');
         const sql = sqlObj.getSql();
         // const sql = this.conn.createQueryString('SELECT', this.sensorsTable, {topic: 'topic', created: lastWeekTimestamp}, 'created > ? GROUP BY topic');
         return await this.conn.query(sql, [lastWeekTimestamp]);
+    }
+
+    async getLastDataForSensor(sensorId) {
+        const sqlObj = this.conn.createQueryBuilder();
+        sqlObj.setType('select');
+        sqlObj.setTable(this.sensorsTable);
+        sqlObj.setWhere(`sensor_id = ?`);
+        sqlObj.setOrder('created DESC');
+        sqlObj.setLimit(1);
+        const sql = sqlObj.getSql();
+        return await this.conn.query(sql, [sensorId]);
     }
 
     async getForecastForLocationId(locationId) {

@@ -21,8 +21,6 @@ class AppSettings {
             nconf.set("meteo_location_zip", process.env.METEO_LOCATION_ZIP);
         }
 
-        this.saveSettings(false);
-
         // Set new Token if needed
         if (!this.meteo.checkTokenStatus()) {
             const data = await this.meteo.getNewToken();
@@ -30,28 +28,21 @@ class AppSettings {
             if (data) {
                 nconf.set("token", data.access_token);
                 nconf.set("tokenExpirationDate", (Number(data.expires_in) * 1000) + new Date().getTime());
-                this.saveSettings("Token updated");
             } else {
                 console.log( "Could not update Token in settings" );
             }
         }
 
-
-        // if (!nconf.get("meteo_location_id")) {
-        //     if (process.env.METEO_LOCATION_ID) {
-        //         nconf.set("meteo_location_id", process.env.METEO_LOCATION_ID);
-        //         this.saveSettings("Meteo Location ID set");
-        //     }
-        // }
         if(!nconf.get("meteo_location")) {
             const location = await this.meteo.getLocationDataForZip(nconf.get("meteo_location_zip"));
             if (location) {
                 nconf.set("meteo_location", location[0].geolocation);
-                this.saveSettings("Meteo Location set");
             } else {
                 console.log("Could not get location data for zip " + nconf.get("meteo_location_zip"));
             }
         }
+
+        this.saveSettings(false);
     }
 
     storeSettings(data) {

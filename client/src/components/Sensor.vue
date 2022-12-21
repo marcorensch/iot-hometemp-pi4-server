@@ -15,7 +15,7 @@
         <div>
           <div class="sensor-hum">
             <font-awesome-icon icon="droplet" class="uk-margin-small-right"/>
-            {{ sensor.hum }}&nbsp;g/m3
+            {{ sensor.hum }}&nbsp;%
           </div>
         </div>
       </div>
