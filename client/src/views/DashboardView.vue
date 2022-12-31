@@ -76,7 +76,6 @@ export default {
     startUpdateTimer(interval) {
       setTimeout(() => {
         console.log('update timer');
-        // Your logic here
         this.getMeteoData();
         this.startUpdateTimer(interval);
       }, interval);

@@ -7,12 +7,11 @@
          :style="{ backgroundImage: 'url(' + bgimage + ')' }">
       <video id="backgroundVideo" :src="bgvideo" autoplay muted playsinline uk-cover></video>
       <div v-if="dataReady" class="uk-position-relative">
-        <h2 class="locationName" v-if="locationName">Vorhersage für {{ locationName }}</h2>
         <div v-if="meteodata && forecast" uk-slider>
           <ul class="uk-slider-items uk-child-width-1-1 uk-grid uk-grid-small">
             <li v-for="day in forecast" :key="day.local_date_time">
-
               <div class="uk-card uk-card-small uk-border-rounded nxd-dashboard-card uk-card-body uk-position-relative">
+                <h2 class="locationName" v-if="locationName">Vorhersage für {{ locationName }}</h2>
                 <h3 class="uk-h4 uk-margin-remove">
                   {{ new Date(day.local_date_time).toLocaleDateString([], {weekday: 'long'}) }}</h3>
                 <div class="uk-text-small">{{
@@ -32,7 +31,7 @@
                   <DayTable :data="day"/>
                 </div>
 
-                <div class="forecast-hour-container uk-margin-top uk-text-small uk-padding-small uk-border-rounded uk-position-relative uk-position-z-index">
+                <div class="forecast-hour-container uk-margin-top uk-text-small uk-padding-small uk-border-rounded uk-position-relative ">
                   <div class="uk-flex uk-flex-between">
                     <div class="hour-item-container uk-position-relative" :class="{empty: !hour}"
                          v-for="(hour, index) of day.hour" :key="index">
@@ -161,3 +160,9 @@ export default {
   },
 };
 </script>
+
+<style type="text/css" scoped>
+.nxd-dashboard-card{
+  height: auto !important;
+}
+</style>

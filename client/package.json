@@ -11,12 +11,14 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.2",
     "axios": "^1.2.1",
+    "chart.js": "^4.1.1",
     "core-js": "^3.8.3",
     "pinia": "^2.0.23",
     "simple-keyboard": "^3.4.184",
     "socket.io-client": "^4.5.3",
     "uikit": "^3.15.12",
     "vue": "^3.2.13",
+    "vue-chartjs": "^5.1.0",
     "vue-router": "^4.0.3"
   },
   "devDependencies": {

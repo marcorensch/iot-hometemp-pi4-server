@@ -52,6 +52,18 @@ class DatabaseConnection {
         return await this.conn.query(sql, [lastWeekTimestamp]);
     }
 
+    async getSensorData(sensor_id, limit = 100) {
+        const sqlObj = this.conn.createQueryBuilder();
+        sqlObj.setType('select');
+        sqlObj.setFields(['created', 'temperature', 'humidity']);
+        sqlObj.setTable(this.sensorsTable);
+        sqlObj.setWhere(`sensor_id = ?`);
+        sqlObj.setOrder('created DESC');
+        sqlObj.setLimit(limit);
+        const sql = sqlObj.getSql();
+        return await this.conn.query(sql, [sensor_id]);
+    }
+
     async getLastDataForSensor(sensorId) {
         const sqlObj = this.conn.createQueryBuilder();
         sqlObj.setType('select');

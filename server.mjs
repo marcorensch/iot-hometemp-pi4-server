@@ -35,8 +35,6 @@ const io = new Server(httpServer, {
 server.use(cors());
 const port = 3000;
 
-
-
 io.on("connection", (socket) => {
     socket.on('get:settings', () => {
         const settings = appSettings.getSettings();
@@ -53,9 +51,8 @@ io.on("connection", (socket) => {
     });
 
     socket.on('get:getSensorHistory', async (sensor_id) => {
-        console.log(sensor_id);
-        // const sensors = await database.getActiveSensors();
-        // socket.emit('stored:sensors', sensors);
+        const sensorData = await database.getSensorData(sensor_id, 75);
+        socket.emit('stored:sensorHistory', sensorData);
     });
 });
 
