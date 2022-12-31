@@ -43,7 +43,7 @@ const setup = [
     },
     {
         question: 'Enter your Database table name for sensors: ',
-        key: 'DB_SENSORTABLENAME',
+        key: 'DB_SENSORSTABLENAME',
         default: 'sensors',
         value: ''
     },

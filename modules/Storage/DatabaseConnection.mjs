@@ -137,7 +137,7 @@ class DatabaseConnection {
             created: 'DATETIME',
             temperature: 'VARCHAR(10)',
             humidity: 'VARCHAR(10)',
-            sensorId: 'VARCHAR(100)'
+            sensor_id: 'VARCHAR(100)'
         });
         const sql = sqlObj.getSql();
         return await this.conn.query(sql);
