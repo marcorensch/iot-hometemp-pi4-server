@@ -180,6 +180,7 @@ class Helper {
         const diff = timeNow - lastUpdateTime;
         console.log("lastUpdateTime", lastUpdateTime);
         console.log("timeNow", timeNow);
+        console.log("UpdateIntervalMs", updateIntervalMs);
         console.log("Difference is:" + diff);
         console.log("Update of Meteodata required: " + (diff > updateIntervalMs));
 
