@@ -134,7 +134,7 @@ export default {
                 }
               }
             }
-            this.setBackgroundVideo(this.meteoDataToday.PROBPCP_PERCENT);
+            // this.setBackgroundVideo(this.meteoDataToday.PROBPCP_PERCENT);
           })
           .catch((error) => {
             console.error(error);
