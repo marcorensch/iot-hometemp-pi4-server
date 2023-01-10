@@ -87,6 +87,7 @@ class DatabaseConnection {
         let rows = await this.conn.query(sql, [locationId]) ;
         if(rows && rows.length > 0) {
             const createdTimestamp = rows[0].created;
+            console.log('createdTimestamp', createdTimestamp);
             if(Helper.forecastUpdateRequired(createdTimestamp)) {
                 console.log('update required');
                 rows = await this.getNewForecast(locationId);
@@ -172,13 +173,15 @@ class Helper {
     }
 
     static forecastUpdateRequired(lastUpdate) {
+        console.log("ForecastUpdateRequired Called")
         const lastUpdateTime = new Date(lastUpdate).getTime();
         const updateIntervalMs = process.env.DB_UPDATEINTERVALMS;
         const timeNow = new Date().getTime();
         const diff = timeNow - lastUpdateTime;
-
-        console.log(diff);
-        console.log(diff > updateIntervalMs);
+        console.log("lastUpdateTime", lastUpdateTime);
+        console.log("timeNow", timeNow);
+        console.log("Difference is:" + diff);
+        console.log("Update of Meteodata required: " + (diff > updateIntervalMs));
 
         return diff > updateIntervalMs;
 
