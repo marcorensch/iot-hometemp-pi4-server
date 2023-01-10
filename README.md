@@ -43,3 +43,11 @@ Gastons-MacBook-Pro:~ gaston$ /usr/local/sbin/mosquitto -c       /usr/local/etc/
 
 Mosquitto Server is now up and running.
 [Source](https://subscription.packtpub.com/book/application-development/9781787287815/1/ch01lvl1sec12/installing-a-mosquitto-broker-on-macos)
+
+## Use PM2 (Process Manager 2) to start Client & Server
+To run the client & server with PM2, run the following commands:
+```
+pm2 start npm --name "{CustomProcessName}" -- run startAll
+```
+This will spawn the Server & client in PM2
+Please be aware that the server & client might need at least 20 seconds until they are ready
