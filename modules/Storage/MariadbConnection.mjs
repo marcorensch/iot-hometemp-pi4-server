@@ -2,25 +2,38 @@ import mariadb from 'mariadb';
 import QueryBuilder from './QueryBuilder.mjs';
 
 class MariadbConnection {
-  constructor() {
-    try {
-      this.pool = mariadb.createPool({
-        host: process.env.DB_HOST,
-        user: process.env.DB_USER,
-        password: process.env.DB_PASS,
-        database: process.env.DB_DATABASE,
-        connectionLimit: process.env.DB_CONNECTION_LIMIT,
-      });
-    } catch (err) {
-      console.log("Could not create Database connection pool");
-      // console.log(err);
+  constructor(pooled = false) {
+    this.pooled = pooled;
+    if(pooled) {
+      try {
+        this.pool = mariadb.createPool({
+          host: process.env.DB_HOST,
+          user: process.env.DB_USER,
+          password: process.env.DB_PASS,
+          database: process.env.DB_DATABASE,
+          connectionLimit: process.env.DB_CONNECTION_LIMIT,
+        });
+      } catch (err) {
+        console.log("Could not create Database connection pool");
+        // console.log(err);
+      }
+    } else {
+
     }
   }
 
+  createConnection() {
+    return mariadb.createConnection({
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_DATABASE,
+    });
+  }
+
   async query(sql, params) {
-    let conn;
     try {
-      conn = await this.pool.getConnection();
+      let conn = this.pooled ? await this.pool.getConnection() : await this.createConnection();
       return await conn.query(sql, params);
     } catch (err) {
       console.log("Could not execute query Database might not be reachable");
