@@ -32,8 +32,9 @@ class MariadbConnection {
   }
 
   async query(sql, params) {
+    let conn;
     try {
-      let conn = this.pooled ? await this.pool.getConnection() : await this.createConnection();
+      conn = this.pooled ? await this.pool.getConnection() : await this.createConnection();
       return await conn.query(sql, params);
     } catch (err) {
       console.log("Could not execute query Database might not be reachable");

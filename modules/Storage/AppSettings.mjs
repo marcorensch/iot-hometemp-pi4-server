@@ -1,12 +1,28 @@
 import nconf from 'nconf';
 import SrfMeteo from "../SrfMeteo.mjs";
+import fs from "node:fs";
 
 class AppSettings {
 
     constructor() {
-        nconf.use('file', {file: './config.json'});
-        nconf.load();
+        try {
+            nconf.use('file', {file: './config.json'});
+            nconf.load();
+        } catch (e) {
+            console.log(e);
+            this.createEmptyConfigFile()
+        }
         this.meteo = new SrfMeteo();
+    }
+
+    createEmptyConfigFile() {
+        const file = './config.json';
+        const data = {};
+        fs.writeFile(file, JSON.stringify(data), {}, (err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
     }
 
     async setMeteoVariables() {
