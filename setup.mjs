@@ -36,6 +36,12 @@ const setup = [
         value: ''
     },
     {
+        question: 'Enter your MySQL Connection Limit: ',
+        key: 'DB_CONNECTION_LIMIT',
+        default: '10',
+        value: ''
+    },
+    {
         question: 'Enter your Database table name for meteodata: ',
         key: 'DB_METEOTABLENAME',
         default: 'meteo',
