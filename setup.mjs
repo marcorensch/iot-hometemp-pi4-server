@@ -99,6 +99,12 @@ const setup = [
         key: 'METEO_LOCATION_ID',
         default: '47.0459,9.4215',
         value: ''
+    },
+    {
+        question: 'Enter the desired update Interval to fetch new data from Meteo API: ',
+        key: 'DB_UPDATEINTERVALMS',
+        default: '21600000',
+        value: ''
     }
 ];
 
@@ -125,11 +131,10 @@ try{
 }catch(e){console.log(e)}
 
 
+console.log(chalk.bold.green('------------------------------------------------------------------'));
+console.log(chalk.green.bold('Setup Complete!'));
+console.log(chalk.green('Thank you for using PathFinder Setup'));
+console.log(chalk.bold.green('------------------------------------------------------------------'));
 
-
-
-const answer = await rl.question('What do you think of Node.js? ');
-
-console.log(`Thank you for your valuable feedback: ${answer}`);
 
 rl.close();
